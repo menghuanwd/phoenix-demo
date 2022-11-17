@@ -42,6 +42,8 @@ iex -S mix phx.server
 ### Format
 ```shell
 mix format
+mix credo
+mix credo list
 ```
 
 ### Dashboard
