@@ -1,5 +1,7 @@
 defmodule CreditStakeWeb.Router do
   use CreditStakeWeb, :router
+  
+  alias CreditStakeWeb.BankController
 
   pipeline :api do
     plug :accepts, ["json"]
@@ -7,6 +9,8 @@ defmodule CreditStakeWeb.Router do
 
   scope "/api", CreditStakeWeb do
     pipe_through :api
+
+    resources "/banks", BankController
   end
 
   # Enables LiveDashboard only for development

@@ -17,3 +17,24 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+
+## Usage
+
+```shell
+docker run --name phoenix-postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5501:5432 -d postgres
+```
+
+```shell
+mix phx.new credit_stake --no-html --no-assets --binary-id
+
+mix deps.get
+
+mix ecto.create
+
+mix phx.gen.json Database Bank banks name:string:unique
+
+mix ecto.migrate
+mix ecto.rollback
+
+mix ecto.drop
+```
