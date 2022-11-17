@@ -1,0 +1,274 @@
+{
+  "definitions": {
+    "BaiscBank": {
+      "description": "A bank of the app",
+      "example": {
+        "id": "162bf201-55c9-4dff-81ec-4ac42288eb1e",
+        "inserted_at": "2022-11-17 05:10:56",
+        "name": "dave",
+        "updated_at": "2022-11-17 05:10:56"
+      },
+      "properties": {
+        "id": {
+          "description": "Bank ID",
+          "type": "uuid"
+        },
+        "inserted_at": {
+          "description": "Creation timestamp",
+          "format": "datetime",
+          "type": "string"
+        },
+        "name": {
+          "description": "Bank name",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "Update timestamp",
+          "format": "datetime",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "BaiscBank",
+      "type": "object"
+    },
+    "Bank": {
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/BaiscBank"
+        }
+      },
+      "title": "Bank",
+      "type": "object"
+    },
+    "Banks": {
+      "properties": {
+        "data": {
+          "items": {
+            "$ref": "#/definitions/BaiscBank"
+          },
+          "type": "array"
+        }
+      },
+      "title": "Banks",
+      "type": "object"
+    }
+  },
+  "info": {
+    "title": "CreditStake API Doc",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/banks": {
+      "get": {
+        "description": "List all banks in the database",
+        "operationId": "CreditStakeWeb.BankController.index",
+        "parameters": [
+          {
+            "description": "Number of elements per page",
+            "in": "query",
+            "minimum": 1,
+            "name": "per",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "description": "Number of the page",
+            "in": "query",
+            "minimum": 1,
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Banks"
+            }
+          }
+        },
+        "summary": "List Banks",
+        "tags": [
+          "Banks"
+        ]
+      },
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Creates a new bank",
+        "operationId": "CreditStakeWeb.BankController.create",
+        "parameters": [
+          {
+            "description": "The bank request params",
+            "in": "body",
+            "name": "request_params",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/BaiscBank"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Bank created OK",
+            "schema": {
+              "$ref": "#/definitions/Bank"
+            }
+          }
+        },
+        "summary": "Create bank",
+        "tags": [
+          "Banks"
+        ]
+      }
+    },
+    "/api/banks/{id}": {
+      "delete": {
+        "description": "Delete a bank by UUID",
+        "operationId": "CreditStakeWeb.BankController.delete",
+        "parameters": [
+          {
+            "description": "Bank ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "uuid",
+            "x-example": "162bf201-55c9-4dff-81ec-4ac42288eb1e"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content - Deleted Successfully"
+          }
+        },
+        "summary": "Delete Bank",
+        "tags": [
+          "Banks"
+        ]
+      },
+      "get": {
+        "description": "show a new bank",
+        "operationId": "CreditStakeWeb.BankController.show",
+        "parameters": [
+          {
+            "description": "Bank ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "uuid",
+            "x-example": "162bf201-55c9-4dff-81ec-4ac42288eb1e"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Bank OK",
+            "schema": {
+              "$ref": "#/definitions/Bank"
+            }
+          }
+        },
+        "summary": "Show Bank",
+        "tags": [
+          "Banks"
+        ]
+      },
+      "patch": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Update a Bank by UUID",
+        "operationId": "CreditStakeWeb.BankController.update",
+        "parameters": [
+          {
+            "description": "Bank ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "uuid",
+            "x-example": "162bf201-55c9-4dff-81ec-4ac42288eb1e"
+          },
+          {
+            "description": "The bank request params",
+            "in": "body",
+            "name": "request_params",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/BaiscBank"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Bank update OK",
+            "schema": {
+              "$ref": "#/definitions/Bank"
+            }
+          }
+        },
+        "summary": "Update Bank",
+        "tags": [
+          "Banks"
+        ]
+      },
+      "put": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Update a Bank by UUID",
+        "operationId": "CreditStakeWeb.BankController.update",
+        "parameters": [
+          {
+            "description": "Bank ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "uuid",
+            "x-example": "162bf201-55c9-4dff-81ec-4ac42288eb1e"
+          },
+          {
+            "description": "The bank request params",
+            "in": "body",
+            "name": "request_params",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/BaiscBank"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Bank update OK",
+            "schema": {
+              "$ref": "#/definitions/Bank"
+            }
+          }
+        },
+        "summary": "Update Bank",
+        "tags": [
+          "Banks"
+        ]
+      }
+    }
+  },
+  "swagger": "2.0"
+}

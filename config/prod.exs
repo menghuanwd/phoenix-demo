@@ -14,6 +14,8 @@ config :credit_stake, CreditStakeWeb.Endpoint, cache_static_manifest: "priv/stat
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :credit_stake, CreditStakeWeb.Endpoint, load_from_system_env: true, url: [host: "example.com", port: 80]
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
