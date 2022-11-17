@@ -9,3 +9,5 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+CreditStake.Repo.insert!(%CreditStake.Database.Bank{name: "建设银行"})

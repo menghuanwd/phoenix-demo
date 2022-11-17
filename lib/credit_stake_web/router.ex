@@ -1,6 +1,6 @@
 defmodule CreditStakeWeb.Router do
   use CreditStakeWeb, :router
-  
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -12,16 +12,19 @@ defmodule CreditStakeWeb.Router do
   end
 
   scope "/swagger" do
-	  forward("/", PhoenixSwagger.Plug.SwaggerUI, otp_app: :credit_stake, swagger_file: "swagger.json")
+    forward("/", PhoenixSwagger.Plug.SwaggerUI,
+      otp_app: :credit_stake,
+      swagger_file: "swagger.json"
+    )
   end
-  
+
   def swagger_info do
-	  %{
-		  info: %{
-			  version: "1.0",
-			  title: "CreditStake API Doc"
-		  }
-	  }
+    %{
+      info: %{
+        version: "1.0",
+        title: "CreditStake API Doc"
+      }
+    }
   end
 
   # Enables LiveDashboard only for development

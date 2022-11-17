@@ -27,13 +27,13 @@ config :credit_stake, CreditStakeWeb.Endpoint,
   secret_key_base: "FkD+8ks4CrHzClz89kfUreyIUve2XDEIissTflneoazH3WpaYoecgHGuVQJXqiqq",
   watchers: [],
   live_reload: [
-	  patterns: [
-		  ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg|json)$},
-		  ~r{priv/gettext/.*(po)$},
-		  ~r{lib/credit_stake_web/views/.*(ex)$},
-		  ~r{lib/credit_stake_web/controllers/.*(ex)$},
-		  ~r{lib/credit_stake_web/templates/.*(eex)$}
-	  ]
+    patterns: [
+      ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg|json)$},
+      ~r{priv/gettext/.*(po)$},
+      ~r{lib/credit_stake_web/views/.*(ex)$},
+      ~r{lib/credit_stake_web/controllers/.*(ex)$},
+      ~r{lib/credit_stake_web/templates/.*(eex)$}
+    ]
   ],
   reloadable_compilers: [:gettext, :phoenix, :elixir, :phoenix_swagger]
 

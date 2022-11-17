@@ -39,16 +39,15 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 config :credit_stake, :phoenix_swagger,
-       swagger_files: %{
-	       "priv/static/swagger.json" => [
-		       router: CreditStakeWeb.Router,     # phoenix routes will be converted to swagger paths
-#		       endpoint: CreditStakeWeb.Endpoint  # (optional) endpoint config used to set host, port and https schemes.
-	       ]
-       }
-       
+  swagger_files: %{
+    "priv/static/swagger.json" => [
+      router: CreditStakeWeb.Router
+    ]
+  }
+
 config :phoenix_swagger, json_library: Jason
 
-#config :credit_stake, CreditStake.Web.Endpoint, url: [host: "localhost"]
+# config :credit_stake, CreditStake.Web.Endpoint, url: [host: "localhost"]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

@@ -39,6 +39,11 @@ mix phx.server
 iex -S mix phx.server
 ```
 
+### Format
+```shell
+mix format
+```
+
 ### Dashboard
 ```shell
 http://127.0.0.1:4000/dashboard
