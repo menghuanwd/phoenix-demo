@@ -9,6 +9,7 @@ defmodule CreditStakeWeb.Router do
     pipe_through :api
 
     resources "/banks", BankController
+    resources "/articles", ArticleController
   end
 
   scope "/swagger" do

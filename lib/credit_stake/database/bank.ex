@@ -1,6 +1,8 @@
 defmodule CreditStake.Database.Bank do
   use Ecto.Schema
   import Ecto.Changeset
+  
+  alias CreditStake.Database.Article
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -8,6 +10,8 @@ defmodule CreditStake.Database.Bank do
     field :name, :string
 
     timestamps()
+    
+    has_many :articles, Article
   end
 
   @doc false

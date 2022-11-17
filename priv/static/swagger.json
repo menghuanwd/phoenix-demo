@@ -1,5 +1,60 @@
 {
   "definitions": {
+    "Article": {
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/BaiscArticle"
+        }
+      },
+      "title": "Article",
+      "type": "object"
+    },
+    "Articles": {
+      "properties": {
+        "data": {
+          "items": {
+            "$ref": "#/definitions/BaiscArticle"
+          },
+          "type": "array"
+        }
+      },
+      "title": "Articles",
+      "type": "object"
+    },
+    "BaiscArticle": {
+      "description": "A article of the app",
+      "example": {
+        "id": "162bf201-55c9-4dff-81ec-4ac42288eb1e",
+        "inserted_at": "2022-11-17 05:10:56",
+        "title": "dave",
+        "updated_at": "2022-11-17 05:10:56"
+      },
+      "properties": {
+        "id": {
+          "description": "Article ID",
+          "type": "uuid"
+        },
+        "inserted_at": {
+          "description": "Creation timestamp",
+          "format": "datetime",
+          "type": "string"
+        },
+        "title": {
+          "description": "Article title",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "Update timestamp",
+          "format": "datetime",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "title": "BaiscArticle",
+      "type": "object"
+    },
     "BaiscBank": {
       "description": "A bank of the app",
       "example": {
@@ -61,6 +116,214 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/articles": {
+      "get": {
+        "description": "List all articles in the database",
+        "operationId": "CreditStakeWeb.ArticleController.index",
+        "parameters": [
+          {
+            "description": "Number of elements per page",
+            "in": "query",
+            "minimum": 1,
+            "name": "per",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "description": "Number of the page",
+            "in": "query",
+            "minimum": 1,
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Articles"
+            }
+          }
+        },
+        "summary": "List Articles",
+        "tags": [
+          "Articles"
+        ]
+      },
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Creates a new article",
+        "operationId": "CreditStakeWeb.ArticleController.create",
+        "parameters": [
+          {
+            "description": "The article request params",
+            "in": "body",
+            "name": "request_params",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/BaiscArticle"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Article created OK",
+            "schema": {
+              "$ref": "#/definitions/Article"
+            }
+          }
+        },
+        "summary": "Create article",
+        "tags": [
+          "Articles"
+        ]
+      }
+    },
+    "/api/articles/{id}": {
+      "delete": {
+        "description": "Delete a article by UUID",
+        "operationId": "CreditStakeWeb.ArticleController.delete",
+        "parameters": [
+          {
+            "description": "Article ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "uuid",
+            "x-example": "162bf201-55c9-4dff-81ec-4ac42288eb1e"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content - Deleted Successfully"
+          }
+        },
+        "summary": "Delete Article",
+        "tags": [
+          "Articles"
+        ]
+      },
+      "get": {
+        "description": "show a new article",
+        "operationId": "CreditStakeWeb.ArticleController.show",
+        "parameters": [
+          {
+            "description": "Article ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "uuid",
+            "x-example": "162bf201-55c9-4dff-81ec-4ac42288eb1e"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Article OK",
+            "schema": {
+              "$ref": "#/definitions/Article"
+            }
+          }
+        },
+        "summary": "Show Article",
+        "tags": [
+          "Articles"
+        ]
+      },
+      "patch": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Update a Article by UUID",
+        "operationId": "CreditStakeWeb.ArticleController.update",
+        "parameters": [
+          {
+            "description": "Article ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "uuid",
+            "x-example": "162bf201-55c9-4dff-81ec-4ac42288eb1e"
+          },
+          {
+            "description": "The article request params",
+            "in": "body",
+            "name": "request_params",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/BaiscArticle"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Article update OK",
+            "schema": {
+              "$ref": "#/definitions/Article"
+            }
+          }
+        },
+        "summary": "Update Article",
+        "tags": [
+          "Articles"
+        ]
+      },
+      "put": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Update a Article by UUID",
+        "operationId": "CreditStakeWeb.ArticleController.update",
+        "parameters": [
+          {
+            "description": "Article ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "uuid",
+            "x-example": "162bf201-55c9-4dff-81ec-4ac42288eb1e"
+          },
+          {
+            "description": "The article request params",
+            "in": "body",
+            "name": "request_params",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/BaiscArticle"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Article update OK",
+            "schema": {
+              "$ref": "#/definitions/Article"
+            }
+          }
+        },
+        "summary": "Update Article",
+        "tags": [
+          "Articles"
+        ]
+      }
+    },
     "/api/banks": {
       "get": {
         "description": "List all banks in the database",

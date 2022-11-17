@@ -22,4 +22,21 @@ defmodule CreditStake.DatabaseFixtures do
 
     bank
   end
+
+  @doc """
+  Generate a article.
+  """
+  def article_fixture(attrs \\ %{}) do
+    {:ok, article} =
+      attrs
+      |> Enum.into(%{
+        content: "some content",
+        summary: "some summary",
+        title: "some title",
+        visits: 42
+      })
+      |> CreditStake.Database.create_article()
+
+    article
+  end
 end
