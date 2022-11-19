@@ -8,6 +8,7 @@ defmodule CreditStake.Database.Bank do
   @foreign_key_type :binary_id
   schema "banks" do
     field :name, :string
+    field :crawler_url, :string
 
     timestamps()
     
@@ -17,7 +18,7 @@ defmodule CreditStake.Database.Bank do
   @doc false
   def changeset(bank, attrs) do
     bank
-    |> cast(attrs, [:name])
+    |> cast(attrs, [:name, :crawler_url])
     |> validate_required([:name])
     |> unique_constraint(:name)
   end

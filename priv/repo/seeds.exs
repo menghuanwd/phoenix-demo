@@ -10,9 +10,17 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-bank = CreditStake.Repo.insert!(%CreditStake.Database.Bank{name: "建设银行"})
-CreditStake.Repo.insert!(%CreditStake.Database.Article{title: "中奖了", bank: bank})
-CreditStake.Repo.insert!(%CreditStake.Database.Article{title: "没中奖", bank: bank})
+alias CreditStake.Repo
+alias CreditStake.Database.Bank
 
-for i <- CreditStake.Database.list_banks, do: Repo.delete(i)
-for i <- CreditStake.Database.list_articles, do: Repo.delete(i)
+bank_infos = [%{
+	name: "兴业银行",
+	crawler_url: "https://creditcard.cib.com.cn/promotion/national/"
+}]
+
+for info <- bank_infos do
+	Repo.insert(%Bank{name: info.name, crawler_url: info.crawler_url})
+end
+
+#for i <- CreditStake.Database.list_banks, do: CreditStake.Repo.delete(i)
+#for i <- CreditStake.Database.list_articles, do: CreditStake.Repo.delete(i)

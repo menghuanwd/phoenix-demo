@@ -46,7 +46,11 @@ defmodule CreditStake.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:phoenix_swagger, "~> 0.8"},
       {:ex_json_schema, "~> 0.5"},
-	    {:credo, "~> 1.6", only: [:dev, :test], runtime: false}
+	    {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
+	    {:floki, "~> 0.34.0"},
+#      {:fast_html, "~> 2.0"},
+	    {:httpoison, "~> 1.8"},
+	    {:timex, "~> 3.0"}
     ]
   end
 

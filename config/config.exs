@@ -47,6 +47,8 @@ config :credit_stake, :phoenix_swagger,
 
 config :phoenix_swagger, json_library: Jason
 
+#config :floki, :html_parser, Floki.HTMLParser.FastHtml
+
 # config :credit_stake, CreditStake.Web.Endpoint, url: [host: "localhost"]
 
 # Import environment specific config. This must remain at the bottom

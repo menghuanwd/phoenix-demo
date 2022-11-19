@@ -8,8 +8,9 @@ defmodule CreditStake.Database.Article do
   @foreign_key_type :binary_id
   schema "articles" do
     field :content, :string
-    field :summary, :string
     field :title, :string
+    field :published_at, :utc_datetime
+    field :link, :string
     field :visits, :integer
     
     timestamps()
@@ -20,7 +21,7 @@ defmodule CreditStake.Database.Article do
   @doc false
   def changeset(article, attrs) do
     article
-    |> cast(attrs, [:title, :summary, :content, :visits])
-    |> validate_required([:title, :summary, :content, :visits])
+    |> cast(attrs, [:title, :content, :visits, :published_at, :link, :bank_id])
+    |> validate_required([:title, :published_at, :link, :bank_id])
   end
 end

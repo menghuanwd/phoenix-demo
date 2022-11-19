@@ -5,6 +5,7 @@ defmodule CreditStake.Repo.Migrations.CreateBanks do
     create table(:banks, primary_key: false) do
       add :id, :binary_id, primary_key: true
       add :name, :string
+      add :crawler_url, :string
 
       timestamps()
     end

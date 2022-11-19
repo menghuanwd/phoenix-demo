@@ -17,20 +17,32 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 docker run --name phoenix-postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5501:5432 -d postgres
 ```
 
+```shell
+mix hex.info
+mix hex.config
+```
+
 ### Commands
 ```shell
+mix local.hex
+mix archive.install hex phx_new
 mix phx.new credit_stake --no-html --no-assets --binary-id
 
 mix deps.get
+rm -rf ~/.hex
+HEX_HTTP_CONCURRENCY=1 HEX_HTTP_TIMEOUT=1200 mix deps.get
 
 mix ecto.create
-
 mix phx.gen.json Database Bank banks name:string:unique
 
 mix ecto.migrate
 mix ecto.rollback
-
 mix ecto.drop
+
+mix ecto.gen.migration create_articles
+mix ecto.gen.migration add_publish_at_to_article
+
+mix run priv/repo/seeds.exs
 ```
 
 ### Startup
