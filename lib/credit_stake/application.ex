@@ -15,7 +15,9 @@ defmodule CreditStake.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: CreditStake.PubSub},
       # Start the Endpoint (http/https)
-      CreditStakeWeb.Endpoint
+      CreditStakeWeb.Endpoint,
+	
+	    CreditStake.Scheduler
       # Start a worker by calling: CreditStake.Worker.start_link(arg)
       # {CreditStake.Worker, arg}
     ]

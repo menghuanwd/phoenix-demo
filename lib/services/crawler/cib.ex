@@ -13,7 +13,6 @@ defmodule Crawler.CIB do
   alias CreditStake.Database.Bank
   alias CreditStake.Database
 
-  @crawler_url "https://creditcard.cib.com.cn/promotion/national/"
   @domain "https://creditcard.cib.com.cn"
   @bank_name "兴业银行"
 

@@ -50,7 +50,8 @@ defmodule CreditStake.MixProject do
 	    {:floki, "~> 0.34.0"},
 #      {:fast_html, "~> 2.0"},
 	    {:httpoison, "~> 1.8"},
-	    {:timex, "~> 3.0"}
+	    {:timex, "~> 3.0"},
+	    {:quantum, "~> 3.0"}
     ]
   end
 
