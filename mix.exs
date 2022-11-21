@@ -52,7 +52,8 @@ defmodule CreditStake.MixProject do
 	    {:httpoison, "~> 1.8"},
 	    {:timex, "~> 3.0"},
 	    {:quantum, "~> 3.0"},
-	    {:oban, "~> 2.13"}
+	    {:oban, "~> 2.13"},
+	    {:scrivener_ecto, "~> 2.0"}
     ]
   end
 

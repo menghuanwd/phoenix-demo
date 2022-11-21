@@ -3,7 +3,10 @@ defmodule CreditStakeWeb.ArticleController do
   use PhoenixSwagger
 
   alias CreditStake.Database
+  alias CreditStake.Database2
   alias CreditStake.Database.Article
+  alias CreditStake.Repo
+  import Ecto.Query
 
   action_fallback CreditStakeWeb.FallbackController
 
@@ -24,6 +27,9 @@ defmodule CreditStakeWeb.ArticleController do
           example(%{
             id: "162bf201-55c9-4dff-81ec-4ac42288eb1e",
             title: "dave",
+            link: "https://creditcard.cib.com.cn/promotion/national/",
+	          content: "content",
+	          published_at: "2022-11-17 05:10:56",
             inserted_at: "2022-11-17 05:10:56",
             updated_at: "2022-11-17 05:10:56"
           })
@@ -54,9 +60,10 @@ defmodule CreditStakeWeb.ArticleController do
     response(200, "OK", Schema.ref(:Articles))
   end
 
-  def index(conn, _params) do
-    articles = Database.list_articles()
-    render(conn, "index.json", articles: articles)
+  def index(conn, params) do
+	  scrivener = Database2.all(Article, params)
+
+    render(conn, "index.json", scrivener: scrivener)
   end
 
   swagger_path(:create) do
@@ -96,7 +103,7 @@ defmodule CreditStakeWeb.ArticleController do
   end
 
   def show(conn, %{"id" => id}) do
-    article = Database.get_article!(id)
+    article = Database2.find(Article, id)
     render(conn, "show.json", article: article)
   end
 

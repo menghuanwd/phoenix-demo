@@ -36,9 +36,9 @@ defmodule CreditStake.Database do
 
   """
   def get_bank!(id), do: Repo.get!(Bank, id)
-  
+
   def get_first_bank() do
-	  Bank |> first |> Repo.one
+    Bank |> first |> Repo.one()
   end
 
   @doc """
@@ -117,8 +117,10 @@ defmodule CreditStake.Database do
       [%Article{}, ...]
 
   """
-  def list_articles do
-    Repo.all(Article)
+  def list_articles(query \\ nil) do
+    page =
+      from(p in Article, order_by: [asc: p.inserted_at, asc: p.id])
+      |> Repo.paginate(page: query.page)
   end
 
   @doc """

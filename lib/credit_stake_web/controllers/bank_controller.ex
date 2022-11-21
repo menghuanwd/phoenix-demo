@@ -24,6 +24,7 @@ defmodule CreditStakeWeb.BankController do
           example(%{
             id: "162bf201-55c9-4dff-81ec-4ac42288eb1e",
             name: "dave",
+            crawler_url: "https://creditcard.cib.com.cn/promotion/national/",
             inserted_at: "2022-11-17 05:10:56",
             updated_at: "2022-11-17 05:10:56"
           })
