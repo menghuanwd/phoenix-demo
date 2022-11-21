@@ -17,7 +17,9 @@ defmodule CreditStake.Application do
       # Start the Endpoint (http/https)
       CreditStakeWeb.Endpoint,
 	
-	    CreditStake.Scheduler
+	    CreditStake.Scheduler,
+	
+	    {Oban, Application.fetch_env!(:credit_stake, Oban)}
       # Start a worker by calling: CreditStake.Worker.start_link(arg)
       # {CreditStake.Worker, arg}
     ]

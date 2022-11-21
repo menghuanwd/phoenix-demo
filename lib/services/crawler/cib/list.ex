@@ -1,6 +1,7 @@
-defmodule Crawler.CIB do
+defmodule Crawler.CIB.List do
   @moduledoc """
   	兴业银行
+	  Crawler.CIB.List.invoke
   """
   import Ecto.Query
 
@@ -18,7 +19,7 @@ defmodule Crawler.CIB do
 
   def invoke do
     query = from b in Bank, where: b.name == @bank_name
-    #    query = from b in Bank, where: b.name == "兴业银行"
+
     bank = Repo.one(query)
 
     list(bank)
@@ -44,34 +45,23 @@ defmodule Crawler.CIB do
 
     for {title, link, published_at} <- list do
       query = from b in Article, where: b.title == ^title and b.published_at == ^published_at
-      
-      {:ok, article} =
-        case Repo.one(query) do
-          %Article{} = article ->
-            {:ok, article}
 
-          nil ->
-	          params = %{
-		          title: title,
-		          link: link,
-		          published_at: published_at,
-		          bank_id: bank.id
-	          }
-            Database.create_article(params)
-        end
+      case Repo.one(query) do
+        %Article{} = article ->
+          {:ok, article}
 
-      detail(article)
+        nil ->
+          params = %{
+            title: title,
+            link: link,
+            published_at: published_at,
+            bank_id: bank.id
+          }
+
+          {:ok, article} = Database.create_article(params)
+
+          %{id: article.id} |> Crawler.CIB.DetailWorker.new() |> Oban.insert()
+      end
     end
-  end
-
-  defp detail(article) do
-    res = HTTPoison.get!(article.link)
-    #    res = HTTPoison.get!("https://creditcard.cib.com.cn/promotion/national/20220630_1.html")
-
-    {:ok, document} = Floki.parse_document(res.body)
-
-    content = document |> Floki.find(".pd20") |> Floki.raw_html()
-
-    Database.update_article(article, %{content: content})
   end
 end

@@ -20,6 +20,8 @@ config :credit_stake, CreditStakeWeb.Endpoint,
   secret_key_base: "BiYpmMDAwKfEuRR+P0bu6wwgY1e9FW8La5PQzA9XYC7a6Hbn1lFJXkTEu9Zj+zeY",
   server: false
 
+config :credit_stake, Oban, testing: :inline
+
 # In test we don't send emails.
 config :credit_stake, CreditStake.Mailer, adapter: Swoosh.Adapters.Test
 

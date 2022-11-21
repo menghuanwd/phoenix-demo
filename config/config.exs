@@ -50,12 +50,18 @@ config :phoenix_swagger, json_library: Jason
 config :credit_stake, CreditStake.Scheduler,
        jobs: [
 	       # Every minute
-	       {"* * * * *",              {Crawler.CIB, :invoke, []}},
+#	       {"* * * * *",              {Crawler.CIB, :invoke, []}},
 	       # Runs every midnight:
 	       {"@daily",              {Crawler.CIB, :invoke, []}},
        ]
 
 config :credit_stake, CreditStake.Scheduler, debug_logging: false
+
+config :credit_stake, Oban,
+       repo: CreditStake.Repo,
+       plugins: [Oban.Plugins.Pruner],
+       queues: [default: 10]
+       
 #config :floki, :html_parser, Floki.HTMLParser.FastHtml
 
 # config :credit_stake, CreditStake.Web.Endpoint, url: [host: "localhost"]
