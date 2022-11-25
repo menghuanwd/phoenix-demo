@@ -11,16 +11,32 @@
 # and so on) as they will fail if something goes wrong.
 
 alias CreditStake.Repo
+alias CreditStake.Database
 alias CreditStake.Database.Bank
 
-bank_infos = [%{
-	name: "兴业银行",
-	crawler_url: "https://creditcard.cib.com.cn/promotion/national/"
-}]
+bank_infos = [
+  %{
+    name: "兴业银行",
+    crawler_url: "https://creditcard.cib.com.cn/promotion/national/"
+  },
+  %{
+    name: "邮储银行",
+    crawler_url: "https://www.psbc.com/cn/grfw/xyk/tyhd/qgthhd/index.html"
+  }
+]
+
+#for info <- bank_infos do
+#  Repo.insert(%Bank{name: info.name, crawler_url: info.crawler_url})
+#end
 
 for info <- bank_infos do
-	Repo.insert(%Bank{name: info.name, crawler_url: info.crawler_url})
+#	Repo.insert(%Bank{name: info.name, crawler_url: info.crawler_url})
+	
+	with {:ok, %Bank{} = bank} <- Database.create_bank(%{name: info.name, crawler_url: info.crawler_url}) do
+	end
 end
 
-#for i <- CreditStake.Database.list_banks, do: CreditStake.Repo.delete(i)
-#for i <- CreditStake.Database.list_articles, do: CreditStake.Repo.delete(i)
+
+# for i <- CreditStake.Database.list_banks, do: CreditStake.Repo.delete(i)
+# for i <- CreditStake.Database.list_articles, do: CreditStake.Repo.delete(i)
+# for i <- CreditStake.Database2.all(CreditStake.Database.Article, %{}), do: CreditStake.Repo.delete(i)

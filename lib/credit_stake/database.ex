@@ -4,8 +4,8 @@ defmodule CreditStake.Database do
   """
 
   import Ecto.Query, warn: false
-  alias CreditStake.Repo
 
+  alias CreditStake.Repo
   alias CreditStake.Database.Bank
 
   @doc """

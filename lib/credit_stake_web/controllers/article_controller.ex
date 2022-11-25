@@ -5,8 +5,6 @@ defmodule CreditStakeWeb.ArticleController do
   alias CreditStake.Database
   alias CreditStake.Database2
   alias CreditStake.Database.Article
-  alias CreditStake.Repo
-  import Ecto.Query
 
   action_fallback CreditStakeWeb.FallbackController
 

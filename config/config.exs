@@ -52,7 +52,8 @@ config :credit_stake, CreditStake.Scheduler,
 	       # Every minute
 #	       {"* * * * *",              {Crawler.CIB, :invoke, []}},
 	       # Runs every midnight:
-	       {"@daily",              {Crawler.CIB, :invoke, []}},
+	       {"@daily",              {Crawler.CIB.List, :invoke, []}},
+	       {"@daily",              {Crawler.PSBC.List, :invoke, []}},
        ]
 
 config :credit_stake, CreditStake.Scheduler, debug_logging: false
