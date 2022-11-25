@@ -43,8 +43,6 @@ defmodule Crawler.PSBC.List do
           dom |> Floki.find("span") |> Floki.text() |> Timex.parse!("%Y-%m-%d", :strftime)
         }
       end
-      
-      
 
     for {title, link, published_at} <- list do
       query = from b in Article, where: b.title == ^title and b.published_at == ^published_at
