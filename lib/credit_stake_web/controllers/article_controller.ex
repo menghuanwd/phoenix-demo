@@ -18,7 +18,7 @@ defmodule CreditStakeWeb.ArticleController do
           properties do
             id(:uuid, "Article ID")
             title(:string, "Article title", required: true)
-            inserted_at(:string, "Creation timestamp", format: :datetime)
+            created_at(:string, "Creation timestamp", format: :datetime)
             updated_at(:string, "Update timestamp", format: :datetime)
           end
 
@@ -28,7 +28,7 @@ defmodule CreditStakeWeb.ArticleController do
             link: "https://creditcard.cib.com.cn/promotion/national/",
 	          content: "content",
 	          published_at: "2022-11-17 05:10:56",
-            inserted_at: "2022-11-17 05:10:56",
+            created_at: "2022-11-17 05:10:56",
             updated_at: "2022-11-17 05:10:56"
           })
         end,

@@ -12,8 +12,8 @@ defmodule CreditStake.Database.Article do
     field :published_at, :utc_datetime
     field :link, :string
     field :visits, :integer
-    
-    timestamps()
+
+    timestamps(inserted_at: :created_at)
 
     belongs_to :bank, Bank
   end

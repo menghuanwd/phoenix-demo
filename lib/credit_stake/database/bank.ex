@@ -10,7 +10,7 @@ defmodule CreditStake.Database.Bank do
     field :name, :string
     field :crawler_url, :string
 
-    timestamps()
+    timestamps(inserted_at: :created_at)
     
     has_many :articles, Article
   end

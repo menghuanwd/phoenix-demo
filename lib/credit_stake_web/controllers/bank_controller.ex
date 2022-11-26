@@ -17,7 +17,7 @@ defmodule CreditStakeWeb.BankController do
           properties do
             id(:uuid, "Bank ID")
             name(:string, "Bank name", required: true)
-            inserted_at(:string, "Creation timestamp", format: :datetime)
+            created_at(:string, "Creation timestamp", format: :datetime)
             updated_at(:string, "Update timestamp", format: :datetime)
           end
 
@@ -25,7 +25,7 @@ defmodule CreditStakeWeb.BankController do
             id: "162bf201-55c9-4dff-81ec-4ac42288eb1e",
             name: "dave",
             crawler_url: "https://creditcard.cib.com.cn/promotion/national/",
-            inserted_at: "2022-11-17 05:10:56",
+            created_at: "2022-11-17 05:10:56",
             updated_at: "2022-11-17 05:10:56"
           })
         end,

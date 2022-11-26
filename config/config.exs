@@ -11,6 +11,8 @@ config :credit_stake,
   ecto_repos: [CreditStake.Repo],
   generators: [binary_id: true]
 
+config :credit_stake, CreditStake.Repo, migration_timestamps: [inserted_at: :created_at]
+
 # Configures the endpoint
 config :credit_stake, CreditStakeWeb.Endpoint,
   url: [host: "localhost"],
@@ -48,22 +50,22 @@ config :credit_stake, :phoenix_swagger,
 config :phoenix_swagger, json_library: Jason
 
 config :credit_stake, CreditStake.Scheduler,
-       jobs: [
-	       # Every minute
-#	       {"* * * * *",              {Crawler.CIB, :invoke, []}},
-	       # Runs every midnight:
-	       {"@daily",              {Crawler.CIB.List, :invoke, []}},
-	       {"@daily",              {Crawler.PSBC.List, :invoke, []}},
-       ]
+  jobs: [
+    # Every minute
+    # 	       {"* * * * *",              {Crawler.CIB, :invoke, []}},
+    # Runs every midnight:
+    {"@daily", {Crawler.CIB.List, :invoke, []}},
+    {"@daily", {Crawler.PSBC.List, :invoke, []}}
+  ]
 
 config :credit_stake, CreditStake.Scheduler, debug_logging: false
 
 config :credit_stake, Oban,
-       repo: CreditStake.Repo,
-       plugins: [Oban.Plugins.Pruner],
-       queues: [default: 10]
-       
-#config :floki, :html_parser, Floki.HTMLParser.FastHtml
+  repo: CreditStake.Repo,
+  plugins: [Oban.Plugins.Pruner],
+  queues: [default: 10]
+
+# config :floki, :html_parser, Floki.HTMLParser.FastHtml
 
 # config :credit_stake, CreditStake.Web.Endpoint, url: [host: "localhost"]
 

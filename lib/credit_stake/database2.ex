@@ -7,7 +7,8 @@ defmodule CreditStake.Database2 do
   alias CreditStake.Repo
 
   def all(klass, query) do
-    from(p in klass, order_by: [desc: p.published_at], preload: [:bank])
+    from(p in klass, order_by: [desc: p.created_at])
+#    from(p in klass, order_by: [desc: p.published_at], preload: [:bank])
     |> Repo.paginate(page: query["page"], page_size: query["per"])
   end
 

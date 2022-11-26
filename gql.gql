@@ -1,0 +1,19 @@
+
+{
+    banks {
+        id
+        name
+    },
+    bank(id: "3561217a-52e7-4816-a7f8-a2a8b52f6ce0") {
+        id
+        name
+        articles {
+            id
+            title
+        }
+    },
+    articles {
+        id
+        title
+    },
+}

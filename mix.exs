@@ -53,9 +53,14 @@ defmodule CreditStake.MixProject do
 	    {:timex, "~> 3.0"},
 	    {:quantum, "~> 3.0"},
 	    {:oban, "~> 2.13"},
-	    {:scrivener_ecto, "~> 2.0"}
+	    {:scrivener_ecto, "~> 2.0"},
+	    {:absinthe, "~> 1.5"},
+	    {:absinthe_plug, "~> 1.5"}
     ]
   end
+
+#  {:bypass, "~> 2.1", only: :test},
+
 
   # Aliases are shortcuts or tasks specific to the current project.
   # For example, to install project dependencies and perform other setup tasks, run:

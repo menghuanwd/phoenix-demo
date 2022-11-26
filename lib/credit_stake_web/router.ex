@@ -5,6 +5,13 @@ defmodule CreditStakeWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/" do
+	  forward "/graph", Absinthe.Plug, schema: CreditStakeWeb.Schema
+#	  forward "/graphiql", Absinthe.Plug.GraphiQL, schema: CreditStakeWeb.Schema
+#	  forward "/graphiql", Absinthe.Plug.GraphiQL, schema: CreditStakeWeb.Schema, interface: :simple
+	  forward "/graphiql", Absinthe.Plug.GraphiQL, schema: CreditStakeWeb.Schema, interface: :playground
+  end
+
   scope "/api", CreditStakeWeb do
     pipe_through :api
 

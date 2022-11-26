@@ -39,4 +39,19 @@ defmodule CreditStake.DatabaseFixtures do
 
     article
   end
+
+  @doc """
+  Generate a user.
+  """
+  def user_fixture(attrs \\ %{}) do
+    {:ok, user} =
+      attrs
+      |> Enum.into(%{
+        age: 42,
+        nickname: "some nickname"
+      })
+      |> CreditStake.Database.create_user()
+
+    user
+  end
 end

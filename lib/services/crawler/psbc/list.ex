@@ -18,7 +18,7 @@ defmodule Crawler.PSBC.List do
   @bank_name "邮储银行"
 
   def invoke do
-    query = from b in Bank, where: b.name == "邮储银行"
+    query = from b in Bank, where: b.name == @bank_name
 
     bank = Repo.one(query)
 
