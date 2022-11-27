@@ -1,19 +1,18 @@
 defmodule CreditStakeWeb.Resolvers.Articles do
 	
 	alias CreditStake.Database.Article
-	alias CreditStake.Database.Bank
-	alias CreditStake.Database2
+	alias CreditStake.Model.Article, as: Model
+	
+	def all(%Article{}=bank, _args, _resolution) do
+		{:ok, Model.all(%{bank: bank}).entries}
+	end
 	
 	def all(_parent, _args, _resolution) do
-		{:ok, Database2.all(Article, %{}).entries}
+		{:ok, Model.all(%{}).entries}
 	end
 	
-	def all(%Bank{}=bank, _args, _resolution) do
-		{:ok, Database2.all(Article, %{bank: bank}).entries}
-	end
-	
-	def find(_parent, %{id: id}=args, _resolution) do
-		case Database2.find(Article, id) do
+	def find(_parent, %{id: id}, _resolution) do
+		case Model.find(id) do
 			nil ->
 				{:error, "Article ID #{id} not found"}
 			

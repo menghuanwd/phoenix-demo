@@ -21,6 +21,8 @@ defmodule CreditStakeWeb.Schema do
 		
 		@desc "Get all articles"
 		field :articles, list_of(:article) do
+			arg :bank_id, :id
+			
 			resolve &Articles.all/3
 		end
 		
@@ -37,9 +39,18 @@ defmodule CreditStakeWeb.Schema do
 		@desc "Create a article"
 		field :create_article, :article do
 			arg :title, non_null(:string)
+			arg :bank_id, :id
 			arg :published_at, :string
 			
-			resolve &Articles.all/0
+			resolve &Articles.all/3
+		end
+		
+		@desc "Create a bank"
+		field :create_bank, :bank do
+			arg :name, non_null(:string)
+			arg :crawler_url, non_null(:string)
+			
+			resolve &Banks.create/3
 		end
 		
 	end

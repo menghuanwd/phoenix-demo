@@ -1,4 +1,3 @@
-
 {
     banks {
         id
@@ -16,4 +15,11 @@
         id
         title
     },
+}
+
+
+mutation CreateBank {
+    createBank(name: "Secon212d", crawler_url: "We're off to a great start!") {
+        id
+    }
 }
