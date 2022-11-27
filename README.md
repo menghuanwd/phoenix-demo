@@ -67,3 +67,8 @@ http://127.0.0.1:4000/dashboard
 ```shell
   mix phx.swagger.generate
 ```
+
+### Functions
+
+* restful api
+* graphql api

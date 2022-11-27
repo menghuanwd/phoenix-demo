@@ -1,21 +1,13 @@
 defmodule CreditStakeWeb.ArticleView do
+	alias CreditStakeWeb.PaginationView
   use CreditStakeWeb, :view
-  alias CreditStakeWeb.ArticleView
 
   def render("index.json", %{scrivener: scrivener}) do
-    %{
-      data: render_many(scrivener.entries, ArticleView, "article.json"),
-      meta: %{
-        page_number: scrivener.page_number,
-        page_size: scrivener.page_size,
-        total_pages: scrivener.total_pages,
-        total_entries: scrivener.total_entries
-      }
-    }
+	  PaginationView.pagination(scrivener, __MODULE__, "article.json")
   end
 
   def render("show.json", %{article: article}) do
-    %{data: render_one(article, ArticleView, "article.json")}
+    %{data: render_one(article, __MODULE__, "article.json")}
   end
 
   def render("article.json", %{article: article}) do

@@ -2,22 +2,46 @@ defmodule CreditStakeWeb.ArticleController do
   use CreditStakeWeb, :controller
   use PhoenixSwagger
 
+  alias CreditStake.Repo
   alias CreditStake.Database
-  alias CreditStake.Database2
+  alias CreditStake.Model.Article, as: Model
   alias CreditStake.Database.Article
 
   action_fallback CreditStakeWeb.FallbackController
 
   def swagger_definitions do
     %{
-      BaiscArticle:
+	    RequestArticle:
+		    swagger_schema do
+			    title("RequestArticle")
+			    description("A article of the app")
+			
+			    properties do
+				    title(:string, "Article title", required: true)
+				    bank_id(:uuid, "Bank ID", required: true)
+				    link(:string, "Article Link", required: true)
+				    content(:string, "Article Content", required: true)
+				    published_at(:string, "Article published at", required: true)
+			    end
+			
+			    example(%{
+				    bank_id: "088dfd10-855b-48fa-8d97-d687ec0f174a",
+				    title: "dave",
+				    link: "https://creditcard.cib.com.cn/promotion/national/",
+				    published_at: "2022-11-17 05:10:56",
+				    content: "content",
+			    })
+		    end,
+      ResponseArticle:
         swagger_schema do
-          title("BaiscArticle")
+          title("ResponseArticle")
           description("A article of the app")
 
           properties do
             id(:uuid, "Article ID")
+            bank_id(:uuid, "Bank ID")
             title(:string, "Article title", required: true)
+            published_at(:string, "Article published at", required: true)
             created_at(:string, "Creation timestamp", format: :datetime)
             updated_at(:string, "Update timestamp", format: :datetime)
           end
@@ -27,6 +51,7 @@ defmodule CreditStakeWeb.ArticleController do
             title: "dave",
             link: "https://creditcard.cib.com.cn/promotion/national/",
 	          content: "content",
+	          bank_id: "162bf201-55c9-4dff-81ec-4ac42288eb1e",
 	          published_at: "2022-11-17 05:10:56",
             created_at: "2022-11-17 05:10:56",
             updated_at: "2022-11-17 05:10:56"
@@ -35,12 +60,12 @@ defmodule CreditStakeWeb.ArticleController do
       Article:
         swagger_schema do
           title("Article")
-          property(:data, Schema.ref(:BaiscArticle))
+          property(:data, Schema.ref(:ResponseArticle))
         end,
       Articles:
         swagger_schema do
           title("Articles")
-          property(:data, Schema.array(:BaiscArticle))
+          property(:data, Schema.array(:ResponseArticle))
         end
     }
   end
@@ -59,7 +84,7 @@ defmodule CreditStakeWeb.ArticleController do
   end
 
   def index(conn, params) do
-	  scrivener = Database2.all(Article, params)
+	  scrivener = Model.all(params)
 
     render(conn, "index.json", scrivener: scrivener)
   end
@@ -71,17 +96,17 @@ defmodule CreditStakeWeb.ArticleController do
     consumes("application/json")
     produces("application/json")
 
-    parameter(:request_params, :body, Schema.ref(:BaiscArticle), "The article request params")
+    parameter(:request_params, :body, Schema.ref(:RequestArticle), "The article request params")
 
     response(201, "Article created OK", Schema.ref(:Article))
   end
 
-  def create(conn, %{"article" => article_params}) do
-    with {:ok, %Article{} = article} <- Database.create_article(article_params) do
+  def create(conn, params) do
+    with {:ok, %Article{} = article} <- Model.create(params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.article_path(conn, :show, article))
-      |> render("show.json", article: article)
+      |> render("show.json", article: article |> Repo.preload([:bank]))
     end
   end
 
@@ -91,7 +116,7 @@ defmodule CreditStakeWeb.ArticleController do
     description("show a new article")
 
     parameter(:id, :path, :uuid, "Article ID",
-      required: true,
+      required: false,
       example: "162bf201-55c9-4dff-81ec-4ac42288eb1e"
     )
 
@@ -101,7 +126,7 @@ defmodule CreditStakeWeb.ArticleController do
   end
 
   def show(conn, %{"id" => id}) do
-    article = Database2.find(Article, id)
+    article = Model.find(id)
     render(conn, "show.json", article: article)
   end
 
@@ -113,19 +138,17 @@ defmodule CreditStakeWeb.ArticleController do
     produces("application/json")
 
     parameter(:id, :path, :uuid, "Article ID",
-      required: true,
+      required: false,
       example: "162bf201-55c9-4dff-81ec-4ac42288eb1e"
     )
 
-    parameter(:request_params, :body, Schema.ref(:BaiscArticle), "The article request params")
+    parameter(:request_params, :body, Schema.ref(:RequestArticle), "The article request params")
 
     response(200, "Article update OK", Schema.ref(:Article))
   end
 
-  def update(conn, %{"id" => id, "article" => article_params}) do
-    article = Database.get_article!(id)
-
-    with {:ok, %Article{} = article} <- Database.update_article(article, article_params) do
+  def update(conn, params) do
+    with {:ok, %Article{} = article} <- Model.update(params) do
       render(conn, "show.json", article: article)
     end
   end
@@ -136,7 +159,7 @@ defmodule CreditStakeWeb.ArticleController do
     description("Delete a article by UUID")
 
     parameter(:id, :path, :uuid, "Article ID",
-      required: true,
+      required: false,
       example: "162bf201-55c9-4dff-81ec-4ac42288eb1e"
     )
 
@@ -144,9 +167,7 @@ defmodule CreditStakeWeb.ArticleController do
   end
 
   def delete(conn, %{"id" => id}) do
-    article = Database.get_article!(id)
-
-    with {:ok, %Article{}} <- Database.delete_article(article) do
+    with {:ok, %Article{}} <- Model.destroy(id) do
       send_resp(conn, :no_content, "")
     end
   end

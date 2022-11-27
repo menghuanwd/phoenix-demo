@@ -1,13 +1,13 @@
 defmodule CreditStakeWeb.BankView do
+  alias CreditStakeWeb.PaginationView
   use CreditStakeWeb, :view
-  alias CreditStakeWeb.BankView
 
-  def render("index.json", %{banks: banks}) do
-    %{data: render_many(banks, BankView, "bank.json")}
+  def render("index.json", %{scrivener: scrivener}) do
+    PaginationView.pagination(scrivener, __MODULE__, "bank.json")
   end
 
   def render("show.json", %{bank: bank}) do
-    %{data: render_one(bank, BankView, "bank.json")}
+    %{data: render_one(bank, __MODULE__, "bank.json")}
   end
 
   def render("bank.json", %{bank: bank}) do

@@ -3,15 +3,31 @@ defmodule CreditStakeWeb.BankController do
   use PhoenixSwagger
 
   alias CreditStake.Database
+  alias CreditStake.Model.Bank, as: Model
   alias CreditStake.Database.Bank
 
   action_fallback CreditStakeWeb.FallbackController
 
   def swagger_definitions do
     %{
-      BaiscBank:
+	    RequestBank:
+		    swagger_schema do
+			    title("RequestBank")
+			    description("RequestBank")
+			
+			    properties do
+				    name(:string, "Bank name", required: true)
+				    crawler_url(:string, "Crawler Url", required: true)
+			    end
+			
+			    example(%{
+				    name: "dave",
+				    crawler_url: "https://creditcard.cib.com.cn/promotion/national/",
+			    })
+	    end,
+      ResponseBank:
         swagger_schema do
-          title("BaiscBank")
+          title("ResponseBank")
           description("A bank of the app")
 
           properties do
@@ -32,12 +48,12 @@ defmodule CreditStakeWeb.BankController do
       Bank:
         swagger_schema do
           title("Bank")
-          property(:data, Schema.ref(:BaiscBank))
+          property(:data, Schema.ref(:ResponseBank))
         end,
       Banks:
         swagger_schema do
           title("Banks")
-          property(:data, Schema.array(:BaiscBank))
+          property(:data, Schema.array(:ResponseBank))
         end
     }
   end
@@ -55,9 +71,10 @@ defmodule CreditStakeWeb.BankController do
     response(200, "OK", Schema.ref(:Banks))
   end
 
-  def index(conn, _params) do
-    banks = Database.list_banks()
-    render(conn, "index.json", banks: banks)
+  def index(conn, params) do
+	  scrivener = Model.all(params)
+	
+	  render(conn, "index.json", scrivener: scrivener)
   end
 
   swagger_path(:create) do
@@ -67,13 +84,13 @@ defmodule CreditStakeWeb.BankController do
     consumes("application/json")
     produces("application/json")
 
-    parameter(:request_params, :body, Schema.ref(:BaiscBank), "The bank request params")
+    parameter(:request_params, :body, Schema.ref(:RequestBank), "The bank request params")
 
     response(201, "Bank created OK", Schema.ref(:Bank))
   end
 
-  def create(conn, %{"bank" => bank_params}) do
-    with {:ok, %Bank{} = bank} <- Database.create_bank(bank_params) do
+  def create(conn, params) do
+    with {:ok, %Bank{} = bank} <- Model.create(params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.bank_path(conn, :show, bank))
@@ -84,10 +101,10 @@ defmodule CreditStakeWeb.BankController do
   swagger_path :show do
     tag("Banks")
     summary("Show Bank")
-    description("show a new bank")
+    description("show a bank")
 
     parameter(:id, :path, :uuid, "Bank ID",
-      required: true,
+      required: false,
       example: "162bf201-55c9-4dff-81ec-4ac42288eb1e"
     )
 
@@ -97,7 +114,8 @@ defmodule CreditStakeWeb.BankController do
   end
 
   def show(conn, %{"id" => id}) do
-    bank = Database.get_bank!(id)
+    bank = Model.find(id)
+
     render(conn, "show.json", bank: bank)
   end
 
@@ -109,19 +127,17 @@ defmodule CreditStakeWeb.BankController do
     produces("application/json")
 
     parameter(:id, :path, :uuid, "Bank ID",
-      required: true,
+      required: false,
       example: "162bf201-55c9-4dff-81ec-4ac42288eb1e"
     )
 
-    parameter(:request_params, :body, Schema.ref(:BaiscBank), "The bank request params")
+    parameter(:request_params, :body, Schema.ref(:RequestBank), "The bank request params")
 
     response(200, "Bank update OK", Schema.ref(:Bank))
   end
 
-  def update(conn, %{"id" => id, "bank" => bank_params}) do
-    bank = Database.get_bank!(id)
-
-    with {:ok, %Bank{} = bank} <- Database.update_bank(bank, bank_params) do
+  def update(conn, params) do
+    with {:ok, %Bank{} = bank} <- Model.update(params) do
       render(conn, "show.json", bank: bank)
     end
   end
@@ -132,7 +148,7 @@ defmodule CreditStakeWeb.BankController do
     description("Delete a bank by UUID")
 
     parameter(:id, :path, :uuid, "Bank ID",
-      required: true,
+      required: false,
       example: "162bf201-55c9-4dff-81ec-4ac42288eb1e"
     )
 
@@ -140,9 +156,7 @@ defmodule CreditStakeWeb.BankController do
   end
 
   def delete(conn, %{"id" => id}) do
-    bank = Database.get_bank!(id)
-
-    with {:ok, %Bank{}} <- Database.delete_bank(bank) do
+    with {:ok, %Bank{}} <- Model.destroy(id) do
       send_resp(conn, :no_content, "")
     end
   end

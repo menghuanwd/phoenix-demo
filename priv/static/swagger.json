@@ -3,7 +3,7 @@
     "Article": {
       "properties": {
         "data": {
-          "$ref": "#/definitions/BaiscArticle"
+          "$ref": "#/definitions/ResponseArticle"
         }
       },
       "title": "Article",
@@ -13,7 +13,7 @@
       "properties": {
         "data": {
           "items": {
-            "$ref": "#/definitions/BaiscArticle"
+            "$ref": "#/definitions/ResponseArticle"
           },
           "type": "array"
         }
@@ -21,9 +21,95 @@
       "title": "Articles",
       "type": "object"
     },
-    "BaiscArticle": {
+    "Bank": {
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/ResponseBank"
+        }
+      },
+      "title": "Bank",
+      "type": "object"
+    },
+    "Banks": {
+      "properties": {
+        "data": {
+          "items": {
+            "$ref": "#/definitions/ResponseBank"
+          },
+          "type": "array"
+        }
+      },
+      "title": "Banks",
+      "type": "object"
+    },
+    "RequestArticle": {
       "description": "A article of the app",
       "example": {
+        "bank_id": "088dfd10-855b-48fa-8d97-d687ec0f174a",
+        "content": "content",
+        "link": "https://creditcard.cib.com.cn/promotion/national/",
+        "published_at": "2022-11-17 05:10:56",
+        "title": "dave"
+      },
+      "properties": {
+        "bank_id": {
+          "description": "Bank ID",
+          "type": "uuid"
+        },
+        "content": {
+          "description": "Article Content",
+          "type": "string"
+        },
+        "link": {
+          "description": "Article Link",
+          "type": "string"
+        },
+        "published_at": {
+          "description": "Article published at",
+          "type": "string"
+        },
+        "title": {
+          "description": "Article title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "published_at",
+        "content",
+        "link",
+        "bank_id",
+        "title"
+      ],
+      "title": "RequestArticle",
+      "type": "object"
+    },
+    "RequestBank": {
+      "description": "RequestBank",
+      "example": {
+        "crawler_url": "https://creditcard.cib.com.cn/promotion/national/",
+        "name": "dave"
+      },
+      "properties": {
+        "crawler_url": {
+          "description": "Crawler Url",
+          "type": "string"
+        },
+        "name": {
+          "description": "Bank name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "crawler_url",
+        "name"
+      ],
+      "title": "RequestBank",
+      "type": "object"
+    },
+    "ResponseArticle": {
+      "description": "A article of the app",
+      "example": {
+        "bank_id": "162bf201-55c9-4dff-81ec-4ac42288eb1e",
         "content": "content",
         "created_at": "2022-11-17 05:10:56",
         "id": "162bf201-55c9-4dff-81ec-4ac42288eb1e",
@@ -33,6 +119,10 @@
         "updated_at": "2022-11-17 05:10:56"
       },
       "properties": {
+        "bank_id": {
+          "description": "Bank ID",
+          "type": "uuid"
+        },
         "created_at": {
           "description": "Creation timestamp",
           "format": "datetime",
@@ -41,6 +131,10 @@
         "id": {
           "description": "Article ID",
           "type": "uuid"
+        },
+        "published_at": {
+          "description": "Article published at",
+          "type": "string"
         },
         "title": {
           "description": "Article title",
@@ -53,12 +147,13 @@
         }
       },
       "required": [
+        "published_at",
         "title"
       ],
-      "title": "BaiscArticle",
+      "title": "ResponseArticle",
       "type": "object"
     },
-    "BaiscBank": {
+    "ResponseBank": {
       "description": "A bank of the app",
       "example": {
         "crawler_url": "https://creditcard.cib.com.cn/promotion/national/",
@@ -90,28 +185,7 @@
       "required": [
         "name"
       ],
-      "title": "BaiscBank",
-      "type": "object"
-    },
-    "Bank": {
-      "properties": {
-        "data": {
-          "$ref": "#/definitions/BaiscBank"
-        }
-      },
-      "title": "Bank",
-      "type": "object"
-    },
-    "Banks": {
-      "properties": {
-        "data": {
-          "items": {
-            "$ref": "#/definitions/BaiscBank"
-          },
-          "type": "array"
-        }
-      },
-      "title": "Banks",
+      "title": "ResponseBank",
       "type": "object"
     }
   },
@@ -171,7 +245,7 @@
             "name": "request_params",
             "required": false,
             "schema": {
-              "$ref": "#/definitions/BaiscArticle"
+              "$ref": "#/definitions/RequestArticle"
             }
           }
         ],
@@ -201,7 +275,7 @@
             "description": "Article ID",
             "in": "path",
             "name": "id",
-            "required": true,
+            "required": false,
             "type": "uuid",
             "x-example": "162bf201-55c9-4dff-81ec-4ac42288eb1e"
           }
@@ -224,7 +298,7 @@
             "description": "Article ID",
             "in": "path",
             "name": "id",
-            "required": true,
+            "required": false,
             "type": "uuid",
             "x-example": "162bf201-55c9-4dff-81ec-4ac42288eb1e"
           }
@@ -256,7 +330,7 @@
             "description": "Article ID",
             "in": "path",
             "name": "id",
-            "required": true,
+            "required": false,
             "type": "uuid",
             "x-example": "162bf201-55c9-4dff-81ec-4ac42288eb1e"
           },
@@ -266,7 +340,7 @@
             "name": "request_params",
             "required": false,
             "schema": {
-              "$ref": "#/definitions/BaiscArticle"
+              "$ref": "#/definitions/RequestArticle"
             }
           }
         ],
@@ -297,7 +371,7 @@
             "description": "Article ID",
             "in": "path",
             "name": "id",
-            "required": true,
+            "required": false,
             "type": "uuid",
             "x-example": "162bf201-55c9-4dff-81ec-4ac42288eb1e"
           },
@@ -307,7 +381,7 @@
             "name": "request_params",
             "required": false,
             "schema": {
-              "$ref": "#/definitions/BaiscArticle"
+              "$ref": "#/definitions/RequestArticle"
             }
           }
         ],
@@ -379,7 +453,7 @@
             "name": "request_params",
             "required": false,
             "schema": {
-              "$ref": "#/definitions/BaiscBank"
+              "$ref": "#/definitions/RequestBank"
             }
           }
         ],
@@ -409,7 +483,7 @@
             "description": "Bank ID",
             "in": "path",
             "name": "id",
-            "required": true,
+            "required": false,
             "type": "uuid",
             "x-example": "162bf201-55c9-4dff-81ec-4ac42288eb1e"
           }
@@ -425,14 +499,14 @@
         ]
       },
       "get": {
-        "description": "show a new bank",
+        "description": "show a bank",
         "operationId": "CreditStakeWeb.BankController.show",
         "parameters": [
           {
             "description": "Bank ID",
             "in": "path",
             "name": "id",
-            "required": true,
+            "required": false,
             "type": "uuid",
             "x-example": "162bf201-55c9-4dff-81ec-4ac42288eb1e"
           }
@@ -464,7 +538,7 @@
             "description": "Bank ID",
             "in": "path",
             "name": "id",
-            "required": true,
+            "required": false,
             "type": "uuid",
             "x-example": "162bf201-55c9-4dff-81ec-4ac42288eb1e"
           },
@@ -474,7 +548,7 @@
             "name": "request_params",
             "required": false,
             "schema": {
-              "$ref": "#/definitions/BaiscBank"
+              "$ref": "#/definitions/RequestBank"
             }
           }
         ],
@@ -505,7 +579,7 @@
             "description": "Bank ID",
             "in": "path",
             "name": "id",
-            "required": true,
+            "required": false,
             "type": "uuid",
             "x-example": "162bf201-55c9-4dff-81ec-4ac42288eb1e"
           },
@@ -515,7 +589,7 @@
             "name": "request_params",
             "required": false,
             "schema": {
-              "$ref": "#/definitions/BaiscBank"
+              "$ref": "#/definitions/RequestBank"
             }
           }
         ],

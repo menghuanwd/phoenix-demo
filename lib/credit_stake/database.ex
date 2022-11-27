@@ -117,7 +117,7 @@ defmodule CreditStake.Database do
       [%Article{}, ...]
 
   """
-  def list_articles(query \\ nil) do
+  def list_articles(query \\ %{page: 1}) do
 	  from(p in Article, order_by: [asc: p.created_at, asc: p.id])
       |> Repo.paginate(page: query.page)
   end
