@@ -3,7 +3,6 @@ defmodule CreditStakeWeb.ArticleController do
   use PhoenixSwagger
 
   alias CreditStake.Repo
-  alias CreditStake.Database
   alias CreditStake.Model.Article, as: Model
   alias CreditStake.Database.Article
 

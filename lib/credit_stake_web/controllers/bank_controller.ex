@@ -2,7 +2,6 @@ defmodule CreditStakeWeb.BankController do
   use CreditStakeWeb, :controller
   use PhoenixSwagger
 
-  alias CreditStake.Database
   alias CreditStake.Model.Bank, as: Model
   alias CreditStake.Database.Bank
 
@@ -114,6 +113,7 @@ defmodule CreditStakeWeb.BankController do
   end
 
   def show(conn, %{"id" => id}) do
+#    raise CreditStake.CustomError, "show my error"
     bank = Model.find(id)
 
     render(conn, "show.json", bank: bank)
