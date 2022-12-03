@@ -11,6 +11,7 @@ config :credit_stake, CreditStake.Repo,
   hostname: "localhost",
   database: "credit_stake_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
+  port: "5501",
   pool_size: 10
 
 # We don't run a server during test. If one is required,

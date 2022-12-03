@@ -89,6 +89,7 @@ defmodule CreditStakeWeb.BankController do
   end
 
   def create(conn, params) do
+	  IO.inspect params
     with {:ok, %Bank{} = bank} <- Model.create(params) do
       conn
       |> put_status(:created)

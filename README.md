@@ -33,6 +33,7 @@ rm -rf ~/.hex
 HEX_HTTP_CONCURRENCY=1 HEX_HTTP_TIMEOUT=1200 mix deps.get
 
 mix ecto.create
+MIX_ENV=test mix ecto.create
 mix phx.gen.json Database Bank banks name:string:unique
 
 mix ecto.migrate

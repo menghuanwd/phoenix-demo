@@ -23,10 +23,10 @@ bank_infos = [
     name: "邮储银行",
     crawler_url: "https://www.psbc.com/cn/grfw/xyk/tyhd/qgthhd/index.html"
   },
-#	%{
-#		name: "民生银行",
-#		crawler_url: "https://creditcard.cmbc.com.cn/fe/jsp/activity/activityListPc.jsp"
-#	}
+	%{
+		name: "民生银行",
+		crawler_url: "https://creditcard.cmbc.com.cn/fe/jsp/activity/activityListPc.jsp"
+	}
 ]
 
 #for info <- bank_infos do

@@ -26,7 +26,7 @@ defmodule CreditStakeWeb.BankControllerTest do
 
   describe "create bank" do
     test "renders bank when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.bank_path(conn, :create), bank: @create_attrs)
+      conn = post(conn, Routes.bank_path(conn, :create), @create_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
       conn = get(conn, Routes.bank_path(conn, :show, id))
@@ -38,7 +38,7 @@ defmodule CreditStakeWeb.BankControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.bank_path(conn, :create), bank: @invalid_attrs)
+      conn = post(conn, Routes.bank_path(conn, :create), @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
@@ -47,7 +47,7 @@ defmodule CreditStakeWeb.BankControllerTest do
     setup [:create_bank]
 
     test "renders bank when data is valid", %{conn: conn, bank: %Bank{id: id} = bank} do
-      conn = put(conn, Routes.bank_path(conn, :update, bank), bank: @update_attrs)
+      conn = put(conn, Routes.bank_path(conn, :update, bank), @update_attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
       conn = get(conn, Routes.bank_path(conn, :show, id))
@@ -59,7 +59,7 @@ defmodule CreditStakeWeb.BankControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, bank: bank} do
-      conn = put(conn, Routes.bank_path(conn, :update, bank), bank: @invalid_attrs)
+      conn = put(conn, Routes.bank_path(conn, :update, bank), @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
