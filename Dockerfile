@@ -84,7 +84,4 @@ COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/credit_stake 
 
 USER nobody
 
-ENV SECRET_KEY_BASE="x1jq8T5ik/2A34D0qKxDPEC70D2O4pmLqY9eB3OEvgdG+OEsm/28j6kPSRR1EJng"
-ENV DATABASE_URL="ecto://USER:PASS@HOST/credit_stake"
-
 CMD ["/app/bin/server"]

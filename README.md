@@ -26,7 +26,7 @@ mix hex.config
 ```shell
 mix local.hex
 mix archive.install hex phx_new
-mix phx.new credit_stake --no-html --no-assets --binary-id
+mix phx.new phoenix-demo --no-html --no-assets --binary-id
 
 mix deps.get
 rm -rf ~/.hex
@@ -50,18 +50,17 @@ mix run priv/repo/seeds.exs
 ```shell
 mix phx.server
 iex -S mix phx.server
+MIX_ENV=prod mix phx.server
 ```
 
 ### Deploy Docker
 ```shell
 mix phx.gen.release --docker
 mix phx.gen.secret
+mix phx.digest
 
-ENV SECRET_KEY_BASE="x1jq8T5ik/2A34D0qKxDPEC70D2O4pmLqY9eB3OEvgdG+OEsm/28j6kPSRR1EJng"
-ENV DATABASE_URL="ecto://USER:PASS@HOST/credit_stake"
-
-docker build . -t credit_stake
-docker run --rm --name credit_stake_1 credit_stake
+docker build . -t phoenix-demo
+docker run --rm --name phoenix-demo_1 phoenix-demo
 ```
 
 ### Crawler
