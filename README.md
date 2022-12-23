@@ -52,6 +52,18 @@ mix phx.server
 iex -S mix phx.server
 ```
 
+### Deploy Docker
+```shell
+mix phx.gen.release --docker
+mix phx.gen.secret
+
+ENV SECRET_KEY_BASE="x1jq8T5ik/2A34D0qKxDPEC70D2O4pmLqY9eB3OEvgdG+OEsm/28j6kPSRR1EJng"
+ENV DATABASE_URL="ecto://USER:PASS@HOST/credit_stake"
+
+docker build . -t credit_stake
+docker run --rm --name credit_stake_1 credit_stake
+```
+
 ### Crawler
 
 services/crawler
